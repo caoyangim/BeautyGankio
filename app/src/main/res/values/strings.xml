@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">BeautyGankio</string>
+    <string name="app_name_chinese">干货集中营</string>
+    <string name="GIRL_PAGE_TITLE">妹子</string>
+    <string name="retry">网络异常，请重试</string>
+
+</resources>
