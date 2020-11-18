@@ -8,11 +8,13 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.cy.beautygankio.dao.GirlDao
+import com.cy.beautygankio.dao.RemoteKeysDao
 import com.cy.beautygankio.gloable.DATABASE_GIRL_NAME
 
-@Database(entities = [Girl::class],version = 1)
+@Database(entities = [Girl::class,RemoteKeys::class],version = 1)
 abstract class GirlDatabase :RoomDatabase(){
     abstract fun girlDao():GirlDao
+    abstract fun remoteKeysDao():RemoteKeysDao
 
     companion object{
         @Volatile private var instance:GirlDatabase? = null

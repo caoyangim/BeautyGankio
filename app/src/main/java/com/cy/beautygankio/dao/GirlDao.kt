@@ -1,6 +1,7 @@
 package com.cy.beautygankio.dao
 
 import androidx.lifecycle.LiveData
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -22,4 +23,10 @@ interface GirlDao {
 
     @Query("SELECT * FROM girl")
     fun getGirls(): Flow<List<Girl>>
+
+    @Query("SELECT * FROM girl")
+    fun getGirlsPaging(): PagingSource<Int,Girl>
+
+    @Query("DELETE FROM girl")
+    suspend fun clearGirl()
 }

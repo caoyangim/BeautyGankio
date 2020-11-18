@@ -10,8 +10,12 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import coil.transform.RoundedCornersTransformation
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
+import com.bumptech.glide.request.RequestOptions
 import com.cy.beautygankio.R
 import com.cy.beautygankio.data.Girl
 
@@ -22,9 +26,14 @@ class GirlAdapter : PagingDataAdapter<Girl, GirlAdapter.GirlViewHolder>(GIRL_DIF
         val author = itemView.findViewById<TextView>(R.id.author)
 
         fun bind(girl: Girl){
-            image.load(girl.url){
-                transformations(RoundedCornersTransformation(10f,10f,10f,10f))
-            }
+
+            Glide.with(image.context)
+                .load(girl.url)
+                .transition(withCrossFade())
+                .fitCenter()
+                .transform(RoundedCorners(20))
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                .into(image)
 
             author.text = girl.desc
         }
@@ -54,7 +63,6 @@ class GirlAdapter : PagingDataAdapter<Girl, GirlAdapter.GirlViewHolder>(GIRL_DIF
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GirlViewHolder {
-        Log.e(">>>","onCreateViewHolder")
         return GirlViewHolder.create(parent)
     }
 
