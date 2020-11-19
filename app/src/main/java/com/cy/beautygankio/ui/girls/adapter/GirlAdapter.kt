@@ -18,15 +18,22 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withC
 import com.bumptech.glide.request.RequestOptions
 import com.cy.beautygankio.R
 import com.cy.beautygankio.data.Girl
+import com.cy.beautygankio.databinding.ListItemGirlsBinding
 
 val heights = arrayListOf(800,700)
 class GirlAdapter : PagingDataAdapter<Girl, GirlAdapter.GirlViewHolder>(GIRL_DIFF){
-    class GirlViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
-        val image = itemView.findViewById<ImageView>(R.id.image)
-        val author = itemView.findViewById<TextView>(R.id.author)
+    class GirlViewHolder(private val binding:ListItemGirlsBinding):RecyclerView.ViewHolder(binding.root){
+        val image = binding.image
+        val author = binding.author
+
+        init {
+            binding.root.setOnClickListener {
+                binding.girl?.title?.let { it1 -> Log.e(">>>", it1) }
+            }
+        }
 
         fun bind(girl: Girl){
-
+            binding.girl = girl
             Glide.with(image.context)
                 .load(girl.url)
                 .transition(withCrossFade())
@@ -40,8 +47,8 @@ class GirlAdapter : PagingDataAdapter<Girl, GirlAdapter.GirlViewHolder>(GIRL_DIF
 
         companion object{
             fun create(parent:ViewGroup): GirlViewHolder {
-                val itemView = LayoutInflater.from(parent.context).inflate(R.layout.list_item_girls,parent,false)
-                val vh = GirlViewHolder(itemView)
+                val binding = ListItemGirlsBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+                val vh = GirlViewHolder(binding)
                 val params = vh.image.layoutParams
                 params.height = heights.random()
                 vh.image.layoutParams = params
