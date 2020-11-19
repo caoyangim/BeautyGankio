@@ -9,5 +9,23 @@
         android:id="@+id/mainFragment"
         android:name="com.cy.beautygankio.ui.home.GankFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_gank" />
+        tools:layout="@layout/fragment_gank" >
+
+        <action
+            android:id="@+id/action_mainFragment_to_girlDetailFragment"
+            app:destination="@id/girlDetailFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/girlDetailFragment"
+        android:name="com.cy.beautygankio.ui.girls.detail.GirlDetailFragment"
+        android:label="GirlDetailFragment"
+        tools:layout="@layout/fragment_girl_detail">
+
+        <argument
+            android:name="girl"
+            app:argType="com.cy.beautygankio.data.Girl" />
+
+    </fragment>
 </navigation>

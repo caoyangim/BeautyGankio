@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -14,25 +15,46 @@ import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.cy.beautygankio.R
 import com.cy.beautygankio.data.Girl
+import com.cy.beautygankio.databinding.ListItemGirlsBinding
+import com.cy.beautygankio.ui.home.GankFragmentDirections
 
 val heights = arrayListOf(800,700)
 class GirlAdapter : PagingDataAdapter<Girl, GirlAdapter.GirlViewHolder>(GIRL_DIFF){
-    class GirlViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
-        val image = itemView.findViewById<ImageView>(R.id.image)
-        val author = itemView.findViewById<TextView>(R.id.author)
+    class GirlViewHolder(private val binding:ListItemGirlsBinding):RecyclerView.ViewHolder(binding.root){
+        val image = binding.image
+        val description = binding.description
+
+        init {
+            binding.root.setOnClickListener {
+                binding.girl?.let { girl ->
+                    navigateToPlant(girl, it)
+                }
+            }
+        }
+
+        private fun navigateToPlant(
+            girl: Girl,
+            view: View
+        ) {
+            val direction =
+                GankFragmentDirections.actionMainFragmentToGirlDetailFragment(
+                    girl
+                )
+            view.findNavController().navigate(direction)
+        }
 
         fun bind(girl: Girl){
+            binding.girl = girl
             image.load(girl.url){
-                transformations(RoundedCornersTransformation(10f,10f,10f,10f))
+                transformations(RoundedCornersTransformation(20f,20f,20f,20f))
             }
-
-            author.text = girl.desc
+            description.text = girl.desc
         }
 
         companion object{
             fun create(parent:ViewGroup): GirlViewHolder {
-                val itemView = LayoutInflater.from(parent.context).inflate(R.layout.list_item_girls,parent,false)
-                val vh = GirlViewHolder(itemView)
+                val binding = ListItemGirlsBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+                val vh = GirlViewHolder(binding)
                 val params = vh.image.layoutParams
                 params.height = heights.random()
                 vh.image.layoutParams = params
@@ -54,7 +76,6 @@ class GirlAdapter : PagingDataAdapter<Girl, GirlAdapter.GirlViewHolder>(GIRL_DIF
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GirlViewHolder {
-        Log.e(">>>","onCreateViewHolder")
         return GirlViewHolder.create(parent)
     }
 
