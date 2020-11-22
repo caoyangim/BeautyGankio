@@ -3,6 +3,7 @@ package com.cy.beautygankio.net
 import androidx.lifecycle.LiveData
 import com.cy.beautygankio.data.GankPage
 import com.cy.beautygankio.data.Girl
+import com.google.gson.GsonBuilder
 import kotlinx.coroutines.flow.Flow
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -28,10 +29,11 @@ interface GirlService {
                 .addInterceptor(logger)
                 .build()
 
+            val gson = GsonBuilder().setDateFormat("yyyy-MM-dd' 'HH:mm:ss").create()
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
                 .create(GirlService::class.java)
         }

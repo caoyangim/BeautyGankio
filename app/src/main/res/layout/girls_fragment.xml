@@ -26,6 +26,7 @@
             app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
             app:spanCount="2"
             tools:listitem="@layout/list_item_girls"
+            android:choiceMode="singleChoice"
             isGone="@{!(loadState instanceof androidx.paging.LoadState.NotLoading)}"/>
 
         <ProgressBar

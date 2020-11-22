@@ -1,58 +1,107 @@
 package com.cy.beautygankio.ui.girls.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.annotation.NonNull
+import androidx.fragment.app.Fragment
+import androidx.navigation.NavDirections
+import androidx.navigation.Navigator
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
-import com.bumptech.glide.request.RequestOptions
+import coil.load
+import coil.request.CachePolicy
+import coil.request.ImageRequest
+import coil.transform.RoundedCornersTransformation
 import com.cy.beautygankio.R
 import com.cy.beautygankio.data.Girl
 import com.cy.beautygankio.databinding.ListItemGirlsBinding
+import com.cy.beautygankio.ui.girls.GirlsFragment
+import com.cy.beautygankio.ui.girls.detail.GirlDetailFragment
+import com.cy.beautygankio.ui.home.GankFragmentDirections
 
-val heights = arrayListOf(800,700)
-class GirlAdapter : PagingDataAdapter<Girl, GirlAdapter.GirlViewHolder>(GIRL_DIFF){
-    class GirlViewHolder(private val binding:ListItemGirlsBinding):RecyclerView.ViewHolder(binding.root){
+val heights = arrayListOf(800,700,750)
+class GirlAdapter(val fragment: Fragment) : PagingDataAdapter<Girl, GirlAdapter.GirlViewHolder>(
+    GIRL_DIFF
+){
+    class GirlViewHolder(val fragment: Fragment, private val binding: ListItemGirlsBinding):RecyclerView.ViewHolder(
+        binding.root
+    ){
         val image = binding.image
-        val author = binding.author
+        val description = binding.description
 
         init {
             binding.root.setOnClickListener {
-                binding.girl?.title?.let { it1 -> Log.e(">>>", it1) }
+                (fragment as GirlsFragment).currentPosition = adapterPosition
+                binding.girl?.let { girl ->
+                    navigateToPlant(girl, it)
+                }
             }
+        }
+
+        private fun navigateToPlant(
+            girl: Girl,
+            view: View
+        ) {
+            val direction =
+                GankFragmentDirections.actionMainFragmentToGirlDetailFragment(
+                    girl
+                )
+
+            val extras = FragmentNavigatorExtras(
+                image to "image_detail_trans",
+                description to "description_trans",
+                binding.date to "date_day_trans"
+            )
+            Navigate(view,direction, extras)
         }
 
         fun bind(girl: Girl){
             binding.girl = girl
-            Glide.with(image.context)
-                .load(girl.url)
-                .transition(withCrossFade())
-                .fitCenter()
-                .transform(RoundedCorners(20))
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                .into(image)
+            image.load(girl.url){
+                transformations(RoundedCornersTransformation(20f, 20f, 20f, 20f))
+                listener(
+                    fun(request: ImageRequest) {},
+                    fun(request: ImageRequest) {},
+                    fun(request, throwable) {
+                        fragment.parentFragment?.startPostponedEnterTransition()
+                    },
+                    fun(request, metadata) {
+                        fragment.parentFragment?.startPostponedEnterTransition()
+                    }
+                )
+            }
+            image.transitionName = girl._id
+            description.text = girl.desc
+            description.transitionName = girl._id + binding.root.context.getString(R.string.transition_name_suffix_des)
+            binding.date.transitionName = girl._id + binding.root.context.getString(R.string.transition_name_suffix_date)
 
-            author.text = girl.desc
+            val params = image.layoutParams
+            params.height = heights[girl.likeCounts%(heights.size)]
+            image.layoutParams = params
         }
 
         companion object{
-            fun create(parent:ViewGroup): GirlViewHolder {
-                val binding = ListItemGirlsBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-                val vh = GirlViewHolder(binding)
-                val params = vh.image.layoutParams
-                params.height = heights.random()
-                vh.image.layoutParams = params
+            fun create(fragment: Fragment, parent: ViewGroup): GirlViewHolder {
+                val binding = ListItemGirlsBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+                val vh = GirlViewHolder(fragment, binding)
                 return vh
+            }
+
+            var lastTime = 0L
+            fun Navigate(view:View,direction:NavDirections,extras:Navigator.Extras){
+                val currentTime = System.currentTimeMillis()
+                if (currentTime - lastTime > 1000){
+                    lastTime = currentTime
+                    view.findNavController().navigate(direction, extras)
+                }
             }
         }
     }
@@ -69,14 +118,15 @@ class GirlAdapter : PagingDataAdapter<Girl, GirlAdapter.GirlViewHolder>(GIRL_DIF
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GirlViewHolder {
-        return GirlViewHolder.create(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GirlAdapter.GirlViewHolder {
+        return GirlAdapter.GirlViewHolder.create(fragment, parent)
     }
 
-    override fun onBindViewHolder(holder: GirlViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: GirlAdapter.GirlViewHolder, position: Int) {
        val girl = getItem(position)
         if (girl != null) {
             holder.bind(girl)
+            fragment.startPostponedEnterTransition()
         }
     }
 }

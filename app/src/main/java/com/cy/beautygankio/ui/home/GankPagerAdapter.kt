@@ -10,8 +10,8 @@ const val UNDETERMINED_PAGE_INDEX = 1
 class GankPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment){
 
     private val tabFragmentsCreators: Map<Int, () -> Fragment> = mapOf(
-        GIRL_PAGE_INDEX to { GirlsFragment.newInstance() },
-        UNDETERMINED_PAGE_INDEX to { GirlsFragment.newInstance() }
+        GIRL_PAGE_INDEX to { GirlsFragment.newInstance() }
+//        UNDETERMINED_PAGE_INDEX to { GirlsFragment.newInstance() }
     )
 
     override fun getItemCount(): Int = tabFragmentsCreators.size

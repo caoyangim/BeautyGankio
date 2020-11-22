@@ -22,6 +22,7 @@
 
 
         <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar_layout"
             android:layout_height="wrap_content"
             android:layout_width="match_parent">
 
@@ -29,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title="@string/app_name_chinese"
-                app:layout_scrollFlags="scroll"/>
+                app:layout_scrollFlags="scroll|enterAlways"/>
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs"
