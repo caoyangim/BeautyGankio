@@ -3,7 +3,10 @@ package com.cy.beautygankio.ui.girls.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.NonNull
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavDirections
+import androidx.navigation.Navigator
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.paging.PagingDataAdapter
@@ -52,7 +55,7 @@ class GirlAdapter(val fragment: Fragment) : PagingDataAdapter<Girl, GirlAdapter.
                 description to "description_trans",
                 binding.date to "date_day_trans"
             )
-            view.findNavController().navigate(direction, extras)
+            Navigate(view,direction, extras)
         }
 
         fun bind(girl: Girl){
@@ -63,10 +66,10 @@ class GirlAdapter(val fragment: Fragment) : PagingDataAdapter<Girl, GirlAdapter.
                     fun(request: ImageRequest) {},
                     fun(request: ImageRequest) {},
                     fun(request, throwable) {
-                        fragment.parentFragment!!.startPostponedEnterTransition()
+                        fragment.parentFragment?.startPostponedEnterTransition()
                     },
                     fun(request, metadata) {
-                        fragment.parentFragment!!.startPostponedEnterTransition()
+                        fragment.parentFragment?.startPostponedEnterTransition()
                     }
                 )
             }
@@ -92,6 +95,15 @@ class GirlAdapter(val fragment: Fragment) : PagingDataAdapter<Girl, GirlAdapter.
 //                params.height = heights.random()
 //                vh.image.layoutParams = params
                 return vh
+            }
+
+            var lastTime = 0L
+            fun Navigate(view:View,direction:NavDirections,extras:Navigator.Extras){
+                val currentTime = System.currentTimeMillis()
+                if (currentTime - lastTime > 1000){
+                    lastTime = currentTime
+                    view.findNavController().navigate(direction, extras)
+                }
             }
         }
     }

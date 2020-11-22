@@ -1,10 +1,14 @@
 package com.cy.beautygankio.ui.home
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.setFragmentResultListener
 import com.cy.beautygankio.R
 import com.cy.beautygankio.databinding.FragmentGankBinding
 import com.google.android.material.tabs.TabLayoutMediator
@@ -14,13 +18,17 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class GankFragment : Fragment() {
 
-    private lateinit var binding:FragmentGankBinding
+    lateinit var binding:FragmentGankBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentGankBinding.inflate(inflater,container,false)
+
+        setFragmentResultListener(getString(R.string.fragment_request_key)) { key, bundle ->
+            binding.appbarLayout.setExpanded(false)
+        }
 
         val tabLayout = binding.tabs
         val viewPager = binding.viewPager

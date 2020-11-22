@@ -64,10 +64,10 @@ class GirlsFragment : Fragment() {
     }
 
     private fun prepareTransitions() {
-        parentFragment!!.also {
-            it.exitTransition = TransitionInflater.from(it.context)
+        parentFragment.also {
+            it?.exitTransition = TransitionInflater.from(it?.context)
                 .inflateTransition(R.transition.grid_exit_transition)
-            it.postponeEnterTransition()
+            it?.postponeEnterTransition()
 
         }
     }

@@ -6,8 +6,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.core.app.SharedElementCallback
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
 import coil.load
 import coil.request.ImageRequest
@@ -41,6 +45,12 @@ class GirlDetailFragment : Fragment() {
         }
 
         prepareSharedElementTransition()
+
+        requireActivity().onBackPressedDispatcher.addCallback {
+            setFragmentResult(getString(R.string.fragment_request_key), bundleOf("bundleKey" to "result"))
+            NavHostFragment.findNavController(this@GirlDetailFragment)
+                .popBackStack();
+        }
 
         return binding.root
     }
