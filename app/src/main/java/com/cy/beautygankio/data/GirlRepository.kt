@@ -54,10 +54,6 @@ class GirlRepository @Inject constructor(
     companion object {
         private const val NETWORK_PAGE_SIZE = 10
         val FRESH_TIMEOUT = TimeUnit.DAYS.toMillis(1)
-        val girl = Girl( "5e9591c60bd5529b54e712af",
-        "鸢媛","Girl", "2020-05-20 08:00:00","希望下一次，能喜欢上一个也喜欢自己的人 ​​​​。",
-        listOf("http://gank.io/images/d237f507bf1946d2b0976e581f8aab9b")
-        ,0,"2020-05-20 08:00:00", 1,"第91期","Girl","http://gank.io/images/d237f507bf1946d2b0976e581f8aab9b", 1650)
     }
 
 }

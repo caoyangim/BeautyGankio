@@ -5,14 +5,15 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import java.io.Serializable
+import java.util.*
 
 @Entity
-@TypeConverters(StringConvert::class)
+@TypeConverters(StringConvert::class,DateConverters::class)
 data class Girl(
     @PrimaryKey val _id: String,
     val author: String,
     val category: String,
-    val createdAt: String,
+    val createdAt: Date,
     val desc: String,
     @ColumnInfo(name = "String")
     val images: List<String>,

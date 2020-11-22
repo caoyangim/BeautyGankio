@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "43172aa38e7e29a62011252d72b4a6b1",
+    "identityHash": "b8f38d2302a82a073ea02c52e83b1d61",
     "entities": [
       {
         "tableName": "Girl",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` TEXT NOT NULL, `author` TEXT NOT NULL, `category` TEXT NOT NULL, `createdAt` TEXT NOT NULL, `desc` TEXT NOT NULL, `String` TEXT NOT NULL, `likeCounts` INTEGER NOT NULL, `publishedAt` TEXT NOT NULL, `stars` INTEGER NOT NULL, `title` TEXT NOT NULL, `type` TEXT NOT NULL, `url` TEXT NOT NULL, `views` INTEGER NOT NULL, PRIMARY KEY(`_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` TEXT NOT NULL, `author` TEXT NOT NULL, `category` TEXT NOT NULL, `createdAt` INTEGER NOT NULL, `desc` TEXT NOT NULL, `String` TEXT NOT NULL, `likeCounts` INTEGER NOT NULL, `publishedAt` TEXT NOT NULL, `stars` INTEGER NOT NULL, `title` TEXT NOT NULL, `type` TEXT NOT NULL, `url` TEXT NOT NULL, `views` INTEGER NOT NULL, PRIMARY KEY(`_id`))",
         "fields": [
           {
             "fieldPath": "_id",
@@ -29,7 +29,7 @@
           {
             "fieldPath": "createdAt",
             "columnName": "createdAt",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -100,7 +100,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '43172aa38e7e29a62011252d72b4a6b1')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b8f38d2302a82a073ea02c52e83b1d61')"
     ]
   }
 }

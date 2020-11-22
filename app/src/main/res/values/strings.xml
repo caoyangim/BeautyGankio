@@ -3,5 +3,8 @@
     <string name="app_name_chinese">干货集中营</string>
     <string name="GIRL_PAGE_TITLE">妹子</string>
     <string name="retry">网络异常，请重试</string>
+    <string name="girl_detail_description">茫然的心境，遥远的梦幻，飘荡，游离……恍若几个世纪，那么漫长。为了那份渴望已久梦中痴缠的美丽，我痴痴地等，傻傻地念，任岁月忽明忽暗地漫过我憔悴的身影。</string>
+    <string name="transition_name_suffix_des">des</string>
+    <string name="transition_name_suffix_date">date</string>
 
 </resources>
