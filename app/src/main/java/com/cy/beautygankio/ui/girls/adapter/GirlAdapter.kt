@@ -22,6 +22,7 @@ import com.cy.beautygankio.databinding.ListItemGirlsBinding
 import com.cy.beautygankio.ui.girls.GirlsFragment
 import com.cy.beautygankio.ui.girls.detail.GirlDetailFragment
 import com.cy.beautygankio.ui.home.GankFragmentDirections
+import com.cy.beautygankio.utils.DpPxUtils
 
 val heights = arrayListOf(800,700,750)
 class GirlAdapter(val fragment: Fragment) : PagingDataAdapter<Girl, GirlAdapter.GirlViewHolder>(
@@ -62,7 +63,8 @@ class GirlAdapter(val fragment: Fragment) : PagingDataAdapter<Girl, GirlAdapter.
         fun bind(girl: Girl){
             binding.girl = girl
             image.load(girl.url){
-                transformations(RoundedCornersTransformation(20f, 20f, 20f, 20f))
+                val radius = DpPxUtils.dp2Px(image.context,10f)
+                transformations(RoundedCornersTransformation(radius, radius))
                 listener(
                     fun(request: ImageRequest) {},
                     fun(request: ImageRequest) {},
@@ -98,7 +100,7 @@ class GirlAdapter(val fragment: Fragment) : PagingDataAdapter<Girl, GirlAdapter.
             var lastTime = 0L
             fun Navigate(view:View,direction:NavDirections,extras:Navigator.Extras){
                 val currentTime = System.currentTimeMillis()
-                if (currentTime - lastTime > 1000){
+                if (currentTime - lastTime > 2000){
                     lastTime = currentTime
                     view.findNavController().navigate(direction, extras)
                 }
