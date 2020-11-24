@@ -25,10 +25,7 @@ class GirlRepository @Inject constructor(
     private val girlDatabase: GirlDatabase
 ){
     fun getGirls(): Flow<PagingData<Girl>> {
-/*        GlobalScope.launch {
-            refreshGirl()
-        }
-        girlDao.getGirls()*/
+
         val pagingSourceFactory =  { girlDatabase.girlDao().getGirlsPaging()}
         return Pager(
             config = PagingConfig(
@@ -57,7 +54,7 @@ class GirlRepository @Inject constructor(
     }
 
     companion object {
-        private const val NETWORK_PAGE_SIZE = 40
+        private const val NETWORK_PAGE_SIZE = 50
         val FRESH_TIMEOUT = TimeUnit.DAYS.toMillis(1)
     }
 

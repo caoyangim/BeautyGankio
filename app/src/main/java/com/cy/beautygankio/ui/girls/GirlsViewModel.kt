@@ -19,7 +19,6 @@ class GirlsViewModel @ViewModelInject constructor(
     var girls = findGirls()
 
     fun findGirls():Flow<PagingData<Girl>>{
-        Log.e(">>>","repository.getGirls().cachedIn(viewModelScope)")
         return repository.getGirls().cachedIn(viewModelScope)
     }
 

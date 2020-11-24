@@ -7,5 +7,9 @@
     <string name="transition_name_suffix_des">des</string>
     <string name="transition_name_suffix_date">date</string>
     <string name="fragment_request_key">requestKey</string>
+    <string name="stay_tuned">敬 请 期 待 ~</string>
+    <string name="image_detail_trans">image_detail_trans</string>
+    <string name="description_trans">description_trans</string>
+    <string name="date_day_trans">date_day_trans</string>
 
 </resources>

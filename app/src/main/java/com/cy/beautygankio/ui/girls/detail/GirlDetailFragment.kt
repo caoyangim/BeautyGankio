@@ -47,13 +47,21 @@ class GirlDetailFragment : Fragment() {
 
         prepareSharedElementTransition()
 
+        binding.imageDetail.setOnClickListener {
+            back()
+        }
+
         requireActivity().onBackPressedDispatcher.addCallback(this) {
-            setFragmentResult(getString(R.string.fragment_request_key), bundleOf("bundleKey" to "result"))
-            NavHostFragment.findNavController(this@GirlDetailFragment)
-                .popBackStack();
+            back()
         }
 
         return binding.root
+    }
+
+    private fun back() {
+        setFragmentResult(getString(R.string.fragment_request_key), bundleOf("bundleKey" to "result"))
+        NavHostFragment.findNavController(this@GirlDetailFragment)
+            .popBackStack();
     }
 
     private fun prepareSharedElementTransition() {

@@ -29,6 +29,7 @@ class GirlsFragment : Fragment() {
     private lateinit var adapter:GirlAdapter
     private var searchJob: Job? = null
     var currentPosition:Int = 0
+    var mView:View? = null
 
     companion object {
         fun newInstance() = GirlsFragment()
@@ -44,23 +45,33 @@ class GirlsFragment : Fragment() {
 
         binding = GirlsFragmentBinding.inflate(inflater, container, false)
 
-        adapter = GirlAdapter(this)
-
-        binding.girlsList.also {
-            it.adapter = adapter.withLoadStateFooter(
-                footer = GirlsLoadStateAdapter { adapter.retry() }
-            )
-            adapter.addLoadStateListener { loadState ->
-                binding.loadState = loadState.source.refresh
+        if (mView == null){
+            adapter = GirlAdapter(this)
+            binding.girlsList.also {
+                it.adapter = adapter.withLoadStateFooter(
+                    footer = GirlsLoadStateAdapter { adapter.retry() }
+                )
+                adapter.addLoadStateListener { loadState ->
+                    binding.loadState = loadState.source.refresh
+                }
+                it.addItemDecoration(GirlsDecoration())
             }
-            it.addItemDecoration(GirlsDecoration())
+            binding.retryButton.setOnClickListener { adapter.retry() }
+            initSwipeFresh()
+            subscribeUi(adapter, binding)
+
+            mView = binding.root
         }
-        binding.retryButton.setOnClickListener { adapter.retry() }
-        subscribeUi(adapter, binding)
+        return mView
+    }
 
-
-
-        return binding.root
+    private fun initSwipeFresh() {
+        binding.swiperefresh.apply {
+            setColorSchemeColors(resources.getColor(R.color.colorAccent))
+            setOnRefreshListener {
+                adapter.refresh()
+            }
+        }
     }
 
     private fun prepareTransitions() {
@@ -113,7 +124,7 @@ class GirlsFragment : Fragment() {
         searchJob = lifecycleScope.launch {
             viewModel.girls.collectLatest {
                 adapter.submitData(it)
-
+                binding.swiperefresh.isRefreshing = false
             }
         }
 
