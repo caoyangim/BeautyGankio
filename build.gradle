@@ -28,7 +28,7 @@ buildscript {
         ktxVersion = '1.0.2'
         lifecycleVersion = '2.2.0'
         materialVersion = '1.2.0'
-        navigationVersion = '2.2.0'
+        navigationVersion = '2.3.1'
         okhttpLoggingVersion = '4.7.2'
         pagingVersion = '3.0.0-alpha09'
         recyclerViewVersion = '1.2.0-alpha04'

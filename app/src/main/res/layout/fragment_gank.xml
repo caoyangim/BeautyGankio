@@ -7,39 +7,55 @@
 
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:context=".MainActivity">
 
-        tools:context=".ui.home.GankFragment">
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/view_pager"
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            tools:context=".ui.home.GankFragment">
 
-
-
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appbar_layout"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent">
-
-            <androidx.appcompat.widget.Toolbar
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/view_pager"
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appbar_layout"
                 android:layout_height="wrap_content"
-                app:title="@string/app_name_chinese"
-                app:layout_scrollFlags="scroll|enterAlways|snap"/>
+                android:layout_width="match_parent">
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"/>
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:title="@string/app_name_chinese"
+                    app:layout_scrollFlags="scroll|enterAlways|snap"/>
 
-        </com.google.android.material.appbar.AppBarLayout>
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"/>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:headerLayout="@layout/drawer_header"
+            app:menu="@menu/drawer_view"
+            android:fitsSystemWindows="true" />
+
+    </androidx.drawerlayout.widget.DrawerLayout>
 
 
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

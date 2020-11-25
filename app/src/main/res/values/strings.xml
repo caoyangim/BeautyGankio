@@ -11,5 +11,7 @@
     <string name="image_detail_trans">image_detail_trans</string>
     <string name="description_trans">description_trans</string>
     <string name="date_day_trans">date_day_trans</string>
+    <string name="navigation_drawer_open">navigation_drawer_open</string>
+    <string name="navigation_drawer_close">navigation_drawer_close</string>
 
 </resources>
